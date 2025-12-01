@@ -21,13 +21,35 @@
 	
 	<h2>Logout</h2>
 	<div>
-		<button type="button" id="logout-button">로그아웃</butto>
+		<button type="button" id="logout-button">로그아웃</button>
 	</div>
 		
+	<script src="js/auth.js"></script>
 	<script>
 		
-		document.getElementById('logout-button').addEventListener('click', () => {
+		document.getElementById('logout-button').addEventListener('click', async () => {
 
+			//리프레시 토큰 삭제
+			//- 서버측에 DB의 리프레시 토큰을 삭제하고 클라언트 쿠키를 만료시키라고 요청
+			try {
+				
+				const response = await fetch('http://localhost:8080/logout', {
+					method: 'POST',
+					credentials: 'include' //HttpOnly 쿠키 전송
+				});
+				
+				if (response.ok) {
+					console.log('로그 아웃 성공');
+				} else {
+					console.log('로그아웃 요청 실패 or 리프레시 토큰 이미 만료됨');
+				}
+				
+			} catch (e) {
+				console.log(e);
+			}
+			
+
+			//액세스 토큰 삭제
 			sessionStorage.removeItem('accessToken');
 			sessionStorage.removeItem('username');
 			window.location.href = 'index.html';

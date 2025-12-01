@@ -1,10 +1,26 @@
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Spring Boot</title>
     <link rel="stylesheet" href="http://bit.ly/3WJ5ilK">
+    <script>
+    
+        const accessToken = sessionStorage.getItem('accessToken');
+        
+        if (!accessToken) {
+            alert('로그인이 필요합니다.');
+            window.location.href = 'login.html';
+        }
+        
+        const roles = sessionStorage.getItem('roles'); //ROLE_MEMBER,ROLE_ADMIN
+        
+        if (roles != 'ROLE_ADMIN') {
+        	alert('권한이 부족합니다.');
+        	window.location.href = '/';
+        }
+        
+	</script>
 </head>
 <body>
 
@@ -24,7 +40,7 @@
 	<h2>Admin</h2>
 	
 	
-	<script src="js/header.js"></script>
+	<script src="js/auth.js"></script>
 	<script>
 		
 	</script>
